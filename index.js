@@ -36,15 +36,17 @@ app.post('/', (req, res) => {
   const url = 'https://us21.api.mailchimp.com/3.0/lists/a2065952bb';
   const options={
     method:"POST",
-    auth:"iyanu:ac1710d531fa3a9ff74576c26629a3b7-us21"
+    auth:"iyanu:0edfe53f379d69fc3a3854db914d8450-us21"
   }
   //console.log(url)
 
-
-
-  
-
   const request = https.request(url,options, function(response){
+
+    if(response.statusCode === 200){
+      res.sendFile(__dirname + '/success.html')
+    }else{
+      res.sendFile(__dirname + '/failure.html')
+    }
     response.on("data", function(data){
       console.log(JSON.parse(data))
     })
@@ -55,13 +57,12 @@ app.post('/', (req, res) => {
   
 });
 
+
+app.post('/failure', function(req,res){
+  res.redirect("/");
+})
+
 app.listen(3000, () => {
   console.log('server started');
 });
 
-
-//ac73051e240c73e758cccb3ac8784b36-us21
-
-//a2065952bb
-
-//ac1710d531fa3a9ff74576c26629a3b7-us21
